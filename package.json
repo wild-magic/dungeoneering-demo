@@ -1,12 +1,37 @@
 {
   "scripts": {
     "build": "next build",
-    "dev": "next",
-    "now-build": "next build"
+    "now-build": "next build",
+    "lint": "tslint --project tsconfig.json",
+    "main": "server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
-    "next": "^8.0.0",
+    "@zeit/next-less": "^0.3.1-canary.4",
+    "@zeit/next-typescript": "^1.1.1",
+    "cannon": "^0.6.2",
+    "express": "^4.16.4",
+    "less": "^3.9.0",
+    "next": "^8.0.4-canary.9",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "three": "^0.102.1",
+    "wild-magic": "^1.0.0-alpha.6",
+    "wild-magix": "^1.0.0-alpha.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.13.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3333"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }

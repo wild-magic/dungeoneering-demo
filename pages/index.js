@@ -1,14 +1,13 @@
-import Link from "next/link";
-import Header from "../components/header";
+import Link from 'next/link';
+import Header from '../components/header';
+import Socket from '../components/Socket';
 
 function Index() {
   return (
     <main>
       <Header />
       <section>
-        <Link href="/about">
-          <a>Go to About Me</a>
-        </Link>
+        <Socket />
       </section>
     </main>
   );
