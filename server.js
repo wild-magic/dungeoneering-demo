@@ -11,17 +11,9 @@ const handle = nextApp.getRequestHandler();
 // fake DB
 const messages = [
   {
-    message: 'Socketzeit ' + Date.now(),
+    message: 'From initial server load',
   },
 ];
-
-io.on('connect', socket => {
-  setInterval(() => {
-    socket.emit('now', {
-      message: 'Socketzeit ' + Date.now(),
-    });
-  }, 1000);
-});
 
 nextApp
   .prepare()
@@ -32,12 +24,31 @@ nextApp
     //   app.render(req, res, actualPage, queryParams);
     // });
 
-    app.get('*', (req, res) => {
-      return handle(req, res);
+    io.on('connection', function(client) {
+      console.log('Client connected...');
+
+      client.on('join', function(data) {
+        console.log('joined');
+      });
+      client.on('disconnect', () => console.log('Client disconnected'));
     });
 
-    app.get('/now', (req, res) => {
+    io.on('connect', socket => {
+      setInterval(() => {
+        socket.emit('now', {
+          message: 'Socketzeit ' + Date.now(),
+        });
+      }, 1000);
+    });
+
+    app.get('/socket.io', (req, res) => {
+      console.log('oh no');
       res.json(messages);
+    });
+
+    app.get('*', (req, res) => {
+      console.log('banana?');
+      return handle(req, res);
     });
 
     server.listen(port, err => {

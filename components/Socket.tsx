@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import { littleBox } from '../Game/entities';
 import { addEntityAction } from 'wild-magix';
+import { isClient } from '../lib/utils';
 
 interface SocketProps {
   addEntity: () => void;
@@ -13,6 +14,9 @@ const SocketComponent: React.FunctionComponent<SocketProps> = props => {
   const [message, setMessage] = React.useState<string | null>(null);
 
   React.useEffect(() => {
+    if (!isClient) {
+      return;
+    }
     const socket = io(window.location.href);
     socket.on('now', data => {
       setMessage(data.message);
