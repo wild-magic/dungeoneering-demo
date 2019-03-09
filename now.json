@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "web",
+  "name": "moon-buggy",
   "builds": [
     {
       "src": "package.json",
