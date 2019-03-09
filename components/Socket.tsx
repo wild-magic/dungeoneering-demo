@@ -13,7 +13,7 @@ const SocketComponent: React.FunctionComponent<SocketProps> = props => {
   const [message, setMessage] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    const socket = io();
+    const socket = io(window.location.href);
     socket.on('now', data => {
       setMessage(data.message);
       // not working atm
