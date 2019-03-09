@@ -8,6 +8,13 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
+// fake DB
+const messages = [
+  {
+    message: 'Socketzeit ' + Date.now(),
+  },
+];
+
 io.on('connect', socket => {
   setInterval(() => {
     socket.emit('now', {
@@ -27,6 +34,10 @@ nextApp
 
     app.get('*', (req, res) => {
       return handle(req, res);
+    });
+
+    app.get('/now', (req, res) => {
+      res.json(messages);
     });
 
     server.listen(port, err => {
