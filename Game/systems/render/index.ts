@@ -18,15 +18,46 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
       const renderMeshData = entity.components.filter(
         (component: any) => component.name === RENDER_MESH
       )[0];
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ color: 0xff6666 });
 
-      const cube = new THREE.Mesh(geometry, material);
-      const cubeContainer = new THREE.Object3D();
-      cubeContainer.add(cube);
+      const makeMesh = renderMeshData => {
+        let geometry;
+        let material;
+        switch (renderMeshData.data.mesh) {
+          case 'Moon':
+            // material = new THREE.MeshPhongMaterial({
+            //   color: new THREE.Color('rgb(226,35,213)'),
+            //   emissive: new THREE.Color('rgb(255,128,64)'),
+            //   specular: new THREE.Color('rgb(255,155,255)'),
+            //   shininess: 10,
+            //   flatShading: true,
+            //   opacity: 1,
+            // });
+
+            material = new THREE.MeshBasicMaterial({ color: 0xff6666 });
+            geometry = renderMeshData.mesh === new THREE.BoxGeometry(1, 1, 1);
+
+            const moonMesh = new THREE.Mesh(geometry, material);
+            const moonObjectContainer = new THREE.Object3D();
+            moonObjectContainer.add(moonMesh);
+
+            return moonObjectContainer;
+          case 'Cube':
+          default:
+            material = new THREE.MeshBasicMaterial({ color: 0xff6666 });
+            geometry = renderMeshData.mesh === new THREE.BoxGeometry(1, 1, 1);
+            const mesh = new THREE.Mesh(geometry, material);
+            const objectContainer = new THREE.Object3D();
+
+            objectContainer.add(mesh);
+            return objectContainer;
+        }
+      };
+
+      const object = makeMesh(renderMeshData);
+
       const { x, y, z } = renderMeshData.data.position.data;
-      cubeContainer.position.set(x, y, z);
-      cubeContainer.name = entity.uuid;
+      object.position.set(x, y, z);
+      object.name = entity.uuid;
 
       const renderDebugData = entity.components.filter(
         (component: any) => component.name === RENDER_DEBUG
@@ -34,10 +65,10 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
 
       if (renderDebugData) {
         const axesHelper = new THREE.AxesHelper(5);
-        cubeContainer.add(axesHelper);
+        object.add(axesHelper);
       }
 
-      world.scene.add(cubeContainer);
+      world.scene.add(object);
     },
     onUpdate: (delta: number, entities, entityActions, { world }: any) => {
       // @ts-ignore

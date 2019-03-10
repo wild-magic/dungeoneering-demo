@@ -6,9 +6,23 @@ import {
   rotationComponent,
   POSITION,
   phyisicsComponent,
+  positionComponent,
 } from '../components';
 import { EntitiesState } from 'wild-magic/lib/Engine/types';
-import { getRandomArbitrary } from '../../lib/utils';
+import { getRandomFloat } from '../../lib/utils';
+
+export const makeMoon = () =>
+  new Entity({
+    name: 'Moon',
+    components: [
+      new Component(RENDER_MESH, {
+        mesh: 'Moon',
+        material: 'Default',
+        position: positionComponent,
+        rotation: rotationComponent,
+      }),
+    ],
+  });
 
 export const makeBox = () =>
   new Entity({
@@ -18,9 +32,9 @@ export const makeBox = () =>
         mesh: 'Cube',
         material: 'Default',
         position: new Component(POSITION, {
-          x: getRandomArbitrary(-10, 10),
-          y: getRandomArbitrary(1, 20),
-          z: getRandomArbitrary(-10, 10),
+          x: getRandomFloat(-10, 10),
+          y: getRandomFloat(5, 20),
+          z: getRandomFloat(-10, 10),
         }),
         rotation: rotationComponent,
       }),
@@ -50,7 +64,7 @@ export const weeBox = new Entity({
   ],
 });
 
-export default [littleBox, weeBox].reduce((memo: EntitiesState, entity) => {
+export default [makeMoon()].reduce((memo: EntitiesState, entity) => {
   memo[entity.uuid] = JSON.parse(JSON.stringify(entity));
   return memo;
 }, {});
