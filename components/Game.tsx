@@ -9,6 +9,7 @@ import {
 import { EntityActions, EntitiesState } from 'wild-magic/lib/Engine/types';
 import { isClient } from '../lib/utils';
 import Game from '../Game';
+import { littleBox, makeBox } from '../Game/entities';
 
 const style = {
   position: 'absolute',
@@ -37,6 +38,12 @@ const GameCanvasComponent: React.FunctionComponent<GameProps> = props => {
       console.error(error);
     }
   }
+
+  React.useEffect(() => {
+    setInterval(() => {
+      addEntity(makeBox());
+    }, 1000);
+  }, []);
 
   React.useEffect(() => {
     if (isClient && canvasEl && canvasEl.current && !game) {

@@ -15,7 +15,6 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
     },
     // should it show only the components concerned, or the entire entity?
     onEntityAdded: (entity: any, { world }: any) => {
-      console.log('RENDER ENTITY ADDED, ', entity);
       const renderMeshData = entity.components.filter(
         (component: any) => component.name === RENDER_MESH
       )[0];
@@ -50,6 +49,7 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
         const { x: px, y: py, z: pz } = renderMeshData.data.position.data;
         const worldObj = world.scene.getObjectByName(entity.uuid);
         if (!worldObj) {
+          // Something went wrong here, probably.
           return;
         }
         worldObj.rotation.set(rx, ry, rz);

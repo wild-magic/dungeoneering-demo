@@ -27,7 +27,6 @@ const physicsSystem = () =>
     },
     // should it show only the components concerned, or the entire entity?
     onEntityAdded: (entity: any, { world }: any) => {
-      console.log('PHYSICS ENTITY ADDED, ', entity);
       const renderMeshData = entity.components.filter(
         (component: any) => component.name === RENDER_MESH
       )[0];
@@ -58,9 +57,9 @@ const physicsSystem = () =>
           (body: CANNON.Body) => body.id === entity.uuid
         );
         if (!body) {
+          // Something went wrong here, probably.
           return;
         }
-        console.log(body);
         const renderMeshData = entity.components.filter(
           (component: any) => component.name === RENDER_MESH
         )[0];

@@ -8,6 +8,25 @@ import {
   phyisicsComponent,
 } from '../components';
 import { EntitiesState } from 'wild-magic/lib/Engine/types';
+import { getRandomArbitrary } from '../../lib/utils';
+
+export const makeBox = () =>
+  new Entity({
+    name: 'another mrBox 🦄',
+    components: [
+      new Component(RENDER_MESH, {
+        mesh: 'Cube',
+        material: 'Default',
+        position: new Component(POSITION, {
+          x: getRandomArbitrary(-10, 10),
+          y: getRandomArbitrary(1, 20),
+          z: getRandomArbitrary(-10, 10),
+        }),
+        rotation: rotationComponent,
+      }),
+      phyisicsComponent,
+    ],
+  });
 
 export const littleBox = new Entity({
   name: 'mr. Box 🦄',
