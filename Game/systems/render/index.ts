@@ -2,6 +2,7 @@ import { System, Component } from 'wild-magic';
 import World from './World';
 import { RENDER_MESH, RENDER_DEBUG } from '../../components';
 import * as THREE from 'three';
+import renderType from './types/renderType';
 
 const renderSystem = (canvas: HTMLCanvasElement) =>
   new System<{ world: World }>({
@@ -19,42 +20,7 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
         (component: any) => component.name === RENDER_MESH
       )[0];
 
-      const makeMesh = renderMeshData => {
-        let geometry;
-        let material;
-        switch (renderMeshData.data.mesh) {
-          case 'Moon':
-            // material = new THREE.MeshPhongMaterial({
-            //   color: new THREE.Color('rgb(226,35,213)'),
-            //   emissive: new THREE.Color('rgb(255,128,64)'),
-            //   specular: new THREE.Color('rgb(255,155,255)'),
-            //   shininess: 10,
-            //   flatShading: true,
-            //   opacity: 1,
-            // });
-
-            material = new THREE.MeshBasicMaterial({ color: 0xff6666 });
-            geometry = renderMeshData.mesh === new THREE.BoxGeometry(1, 1, 1);
-
-            const moonMesh = new THREE.Mesh(geometry, material);
-            const moonObjectContainer = new THREE.Object3D();
-            moonObjectContainer.add(moonMesh);
-
-            return moonObjectContainer;
-          case 'Cube':
-          default:
-            material = new THREE.MeshBasicMaterial({ color: 0xff6666 });
-            geometry = renderMeshData.mesh === new THREE.BoxGeometry(1, 1, 1);
-            const mesh = new THREE.Mesh(geometry, material);
-            const objectContainer = new THREE.Object3D();
-
-            objectContainer.add(mesh);
-            return objectContainer;
-        }
-      };
-
-      const object = makeMesh(renderMeshData);
-
+      const object = renderType(renderMeshData.data.mesh);
       const { x, y, z } = renderMeshData.data.position.data;
       object.position.set(x, y, z);
       object.name = entity.uuid;

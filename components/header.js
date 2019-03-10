@@ -1,7 +1,10 @@
 function Header() {
   return (
     <header>
-      <h1>Moon Buggy</h1>
+      ✨
+      <a href="https://github.com/wild-magic/moon-buggy">
+        check the code on github
+      </a>{' '}
     </header>
   );
 }

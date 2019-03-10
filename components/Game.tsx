@@ -17,6 +17,7 @@ const style = {
   top: 0,
   height: '100vh',
   width: '100vw',
+  zIndex: 0,
 };
 
 interface GameProps {
@@ -38,12 +39,6 @@ const GameCanvasComponent: React.FunctionComponent<GameProps> = props => {
       console.error(error);
     }
   }
-
-  React.useEffect(() => {
-    setInterval(() => {
-      addEntity(makeBox());
-    }, 1000);
-  }, []);
 
   React.useEffect(() => {
     if (isClient && canvasEl && canvasEl.current && !game) {

@@ -10,13 +10,14 @@ import {
 } from '../components';
 import { EntitiesState } from 'wild-magic/lib/Engine/types';
 import { getRandomFloat } from '../../lib/utils';
+import { RenderTypes } from '../systems/render/types/renderType';
 
 export const makeMoon = () =>
   new Entity({
     name: 'Moon',
     components: [
       new Component(RENDER_MESH, {
-        mesh: 'Moon',
+        mesh: RenderTypes.MOON,
         material: 'Default',
         position: positionComponent,
         rotation: rotationComponent,
@@ -29,7 +30,7 @@ export const makeBox = () =>
     name: 'another mrBox 🦄',
     components: [
       new Component(RENDER_MESH, {
-        mesh: 'Cube',
+        mesh: RenderTypes.CUBE,
         material: 'Default',
         position: new Component(POSITION, {
           x: getRandomFloat(-10, 10),
@@ -51,7 +52,7 @@ export const weeBox = new Entity({
   name: 'mr. Box 2🦄',
   components: [
     new Component(RENDER_MESH, {
-      mesh: 'Cube',
+      mesh: RenderTypes.CUBE,
       material: 'Default',
       position: new Component(POSITION, {
         x: 5,

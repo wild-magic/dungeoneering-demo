@@ -1,8 +1,10 @@
 import * as THREE from 'three';
+import OrbitControls from 'three-orbitcontrols';
 
 export default class World {
   private scene: THREE.Scene;
   private renderer: THREE.WebGLRenderer;
+  private controls: OrbitControls;
   private camera: THREE.PerspectiveCamera;
 
   constructor(canvas: HTMLCanvasElement) {
@@ -21,20 +23,26 @@ export default class World {
       0.01,
       1000
     );
-    this.camera.position.set(0, 5, 20);
+    this.camera.position.set(0, 0, 20);
     this.scene.add(gridHelper);
 
     // lights
-    const L1 = new THREE.PointLight(0xffffff, 1);
+    const L1 = new THREE.PointLight(0xffffff, 0.2);
     L1.position.z = 100;
     L1.position.y = 100;
     L1.position.x = 100;
     this.scene.add(L1);
 
-    const L2 = new THREE.PointLight(0xffffff, 0.8);
+    const L2 = new THREE.PointLight(0xffffff, 0.3);
     L2.position.z = 200;
     L2.position.y = 50;
     L2.position.x = -100;
+
+    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = true;
+
     this.scene.add(L2);
   }
 
