@@ -1,6 +1,6 @@
 import { System, Component } from 'wild-magic';
 import * as CANNON from 'cannon';
-import { RENDER_MESH, HAS_PHYSICS } from '../../components';
+import { HAS_PHYSICS } from '../../components';
 
 const physicsSystem = () =>
   new System<{ world: CANNON.World }>({

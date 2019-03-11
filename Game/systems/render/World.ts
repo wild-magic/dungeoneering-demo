@@ -17,6 +17,7 @@ export default class World {
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
     const gridHelper = new THREE.GridHelper(100, 100);
+    gridHelper.position.set(0, -1, 0);
     this.camera = new THREE.PerspectiveCamera(
       45,
       canvas.clientWidth / canvas.clientHeight,
