@@ -45,6 +45,30 @@ const dungeonSystem = () =>
       dungeon.print();
 
       dungeon.children.forEach(room => {
+        // Add Exits
+        room.exits.forEach((exit, index) => {
+          console.log(exit);
+          const [[x, y], angle, connectingRoom] = exit; // local position of exit and piece it exits to
+          const [gx, gy] = room.global_pos([x, y]); // [x, y] global pos of the exit
+
+          entityActions.addEntity(
+            new Entity({
+              name: `room-${room.id}-exit-${index}`,
+              components: [
+                renderableComponent({
+                  mesh: RenderTypes.CUBE,
+                  position: positionComponent({
+                    x: gx,
+                    y: 0,
+                    z: gy,
+                  }),
+                }),
+              ],
+            })
+          );
+        });
+
+        // Add Rooms!
         entityActions.addEntity(
           new Entity({
             name: `room-${room.id}`,
@@ -66,7 +90,11 @@ const dungeonSystem = () =>
                   z: room.position[1],
                 }),
               }),
-              textComponent({ text: `room-${room.id}` }),
+              textComponent({
+                text: `room-${room.id} (${room.position[0]} 0 ${
+                  room.position[1]
+                })`,
+              }),
               renderableComponent({
                 mesh: RenderTypes.TEXT,
                 position: positionComponent({
@@ -79,6 +107,43 @@ const dungeonSystem = () =>
           })
         );
       });
+
+      entityActions.addEntity(
+        new Entity({
+          name: `start-position`,
+          components: [
+            renderableComponent({
+              mesh: RenderTypes.CUBE,
+              position: positionComponent({
+                x: dungeon.start_pos[0],
+                y: 0,
+                z: dungeon.start_pos[1],
+              }),
+            }),
+            renderableComponent({
+              mesh: RenderTypes.DEBUG,
+              position: positionComponent({
+                x: dungeon.start_pos[0],
+                y: 0,
+                z: dungeon.start_pos[1],
+              }),
+            }),
+            textComponent({
+              text: `START HERE!(${dungeon.start_pos[0]} 0 ${
+                dungeon.start_pos[1]
+              })`,
+            }),
+            renderableComponent({
+              mesh: RenderTypes.TEXT,
+              position: positionComponent({
+                x: dungeon.start_pos[0],
+                y: 5,
+                z: dungeon.start_pos[1],
+              }),
+            }),
+          ],
+        })
+      );
 
       console.log(dungeon);
 

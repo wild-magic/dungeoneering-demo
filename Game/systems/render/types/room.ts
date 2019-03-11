@@ -6,7 +6,7 @@ export default (entity: EntityState): THREE.Object3D => {
   const roomData = entity.components.filter(
     (component: any) => component.name === ROOM
   )[0].data;
-  const { size } = roomData;
+  const { room_size: size } = roomData;
   const geometry = new THREE.BoxGeometry(size[0], 1, size[1]);
   geometry.translate(size[0] / 2, 0, size[1] / 2);
   const material = new THREE.MeshBasicMaterial({

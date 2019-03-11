@@ -17,7 +17,7 @@ export default class World {
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
     const gridHelper = new THREE.GridHelper(100, 100);
-    gridHelper.position.set(0, -1, 0);
+    gridHelper.position.set(0, 0, 0);
     this.camera = new THREE.PerspectiveCamera(
       45,
       canvas.clientWidth / canvas.clientHeight,
@@ -43,8 +43,9 @@ export default class World {
     controls.enableDamping = true;
     controls.dampingFactor = 0.25;
     controls.enableZoom = true;
-
     this.scene.add(L2);
+    const axesHelper = new THREE.AxesHelper(5);
+    this.scene.add(axesHelper);
   }
 
   update() {
