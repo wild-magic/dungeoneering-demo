@@ -22,8 +22,10 @@ export default async (entity: EntityState): Promise<THREE.Object3D> => {
   texture.magFilter = THREE.NearestFilter;
   const geometry = new THREE.PlaneBufferGeometry(1, 1);
   geometry.translate(1 / 2, 1 / 2, 0);
-  const material = new THREE.MeshPhongMaterial({
+  const material = new THREE.MeshPhysicalMaterial({
     // color: 0xffff00,
+    roughness: 0.8,
+    reflectivity: 0.1,
     map: texture,
     side: THREE.DoubleSide,
   });

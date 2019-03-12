@@ -134,27 +134,27 @@ const dungeonSystem = () =>
             name: `room-${room.id}`,
             components: [
               roomComponent(room),
-              renderableComponent({
-                mesh: RenderTypes.DEBUG,
-                position: positionComponent({
-                  x: room.position[0],
-                  y: 0,
-                  z: room.position[1],
-                }),
-              }),
-              textComponent({
-                text: `room-${room.id} (${room.position[0]} 0 ${
-                  room.position[1]
-                })`,
-              }),
-              renderableComponent({
-                mesh: RenderTypes.TEXT,
-                position: positionComponent({
-                  x: room.position[0],
-                  y: 5,
-                  z: room.position[1],
-                }),
-              }),
+              // renderableComponent({
+              //   mesh: RenderTypes.DEBUG,
+              //   position: positionComponent({
+              //     x: room.position[0],
+              //     y: 0,
+              //     z: room.position[1],
+              //   }),
+              // }),
+              // textComponent({
+              //   text: `room-${room.id} (${room.position[0]} 0 ${
+              //     room.position[1]
+              //   })`,
+              // }),
+              // renderableComponent({
+              //   mesh: RenderTypes.TEXT,
+              //   position: positionComponent({
+              //     x: room.position[0],
+              //     y: 5,
+              //     z: room.position[1],
+              //   }),
+              // }),
             ],
           })
         );
