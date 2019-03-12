@@ -16,8 +16,6 @@ export default class World {
     });
     this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
-    const gridHelper = new THREE.GridHelper(100, 100);
-    gridHelper.position.set(0, 0, 0);
     this.camera = new THREE.PerspectiveCamera(
       45,
       canvas.clientWidth / canvas.clientHeight,
@@ -25,27 +23,18 @@ export default class World {
       1000
     );
     this.camera.position.set(0, 0, 20);
-    this.scene.add(gridHelper);
-
-    // lights
-    const L1 = new THREE.PointLight(0xffffff, 0.2);
-    L1.position.z = 100;
-    L1.position.y = 100;
-    L1.position.x = 100;
-    this.scene.add(L1);
-
-    const L2 = new THREE.PointLight(0xffffff, 0.3);
-    L2.position.z = 200;
-    L2.position.y = 50;
-    L2.position.x = -100;
 
     const controls = new OrbitControls(this.camera, this.renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.25;
     controls.enableZoom = true;
-    this.scene.add(L2);
-    const axesHelper = new THREE.AxesHelper(5);
-    this.scene.add(axesHelper);
+
+    // const axesHelper = new THREE.AxesHelper(5);
+    // this.scene.add(axesHelper);
+
+    // const gridHelper = new THREE.GridHelper(100, 100);
+    // gridHelper.position.set(0, 0, 0);
+    // this.scene.add(gridHelper);
 
     window.addEventListener(
       'resize',

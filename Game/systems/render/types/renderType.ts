@@ -6,6 +6,8 @@ import debug from './debug';
 import room from './room';
 import { EntityState } from 'wild-magic/lib/Entity/types';
 import text from './text';
+import light from './light';
+import decal from './decal';
 
 export enum RenderTypes {
   MOON = 'MOON',
@@ -14,6 +16,8 @@ export enum RenderTypes {
   DEBUG = 'DEBUG',
   ROOM = 'ROOM',
   TEXT = 'TEXT',
+  DECAL = 'DECAL',
+  LIGHT = 'LIGHT',
 }
 
 export default async (
@@ -30,8 +34,12 @@ export default async (
         return debug(entity);
       case RenderTypes.ROOM:
         return room(entity);
+      case RenderTypes.DECAL:
+        return decal(entity);
       case RenderTypes.TILE:
         return tile(entity);
+      case RenderTypes.LIGHT:
+        return light(entity);
       case RenderTypes.CUBE:
       default:
         return cube(entity);

@@ -8,10 +8,12 @@ import {
   positionComponent,
   textComponent,
   tileComponent,
+  rotationComponent,
 } from '../../components';
 import Dungeon from 'dungeon-generator';
 import { RenderTypes } from '../render/types/renderType';
 import { makeTile } from '../../entities';
+import { getRandomInt, getRandomFloat, degToRad } from '../../../lib/utils';
 
 const dungeonSystem = () =>
   new System<{ dungeon: Dungeon }>({
@@ -68,20 +70,70 @@ const dungeonSystem = () =>
           });
         });
 
+        // random lights in room
+        entityActions.addEntity(
+          new Entity({
+            name: 'torch',
+            components: [
+              renderableComponent({
+                mesh: RenderTypes.LIGHT,
+                position: positionComponent({
+                  x: getRandomInt(
+                    room.position[0],
+                    room.position[0] + room.room_size[0]
+                  ),
+                  y: 0,
+                  z: getRandomInt(
+                    room.position[1],
+                    room.position[1] + room.room_size[1]
+                  ),
+                }),
+              }),
+            ],
+          })
+        );
+
+        // lol
+        const numSkulls = getRandomInt(0, 20);
+        for (
+          let skullsInRoom = 0;
+          skullsInRoom <= numSkulls;
+          skullsInRoom += 1
+        ) {
+          entityActions.addEntity(
+            new Entity({
+              name: 'skull',
+              components: [
+                renderableComponent({
+                  mesh: RenderTypes.DECAL,
+                  position: positionComponent({
+                    x: getRandomFloat(
+                      room.position[0],
+                      room.position[0] + room.room_size[0]
+                    ),
+                    y: 0.2,
+                    z: getRandomFloat(
+                      room.position[1],
+                      room.position[1] + room.room_size[1]
+                    ),
+                  }),
+                  rotation: rotationComponent({
+                    x: 0,
+                    y: degToRad(getRandomInt(0, 360)),
+                    z: 0,
+                  }),
+                }),
+              ],
+            })
+          );
+        }
+
         // Add Rooms!
         entityActions.addEntity(
           new Entity({
             name: `room-${room.id}`,
             components: [
               roomComponent(room),
-              renderableComponent({
-                mesh: RenderTypes.ROOM,
-                position: positionComponent({
-                  x: room.position[0],
-                  y: 0,
-                  z: room.position[1],
-                }),
-              }),
               renderableComponent({
                 mesh: RenderTypes.DEBUG,
                 position: positionComponent({

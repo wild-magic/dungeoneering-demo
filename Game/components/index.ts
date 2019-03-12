@@ -11,10 +11,11 @@ interface XYZ {
 export const ROOM = 'ROOM';
 
 export const TILE = 'TILE';
+export const DECAL = 'DECAL';
 
 export const roomComponent = createComponent<any>(ROOM, {});
 export const tileComponent = createComponent<any>(TILE, {});
-
+export const decalComponent = createComponent<any>(DECAL, {});
 export const TEXT = 'TEXT';
 export const textComponent = createComponent<{ text: string }>(TEXT, {
   text: 'Hello world!',
