@@ -1,4 +1,21 @@
 {
+  "name": "wild-magic-demo",
+  "version": "1.0.0-alpha.7",
+  "description": "Wild Magic | Dungeoneering",
+  "keywords": [
+    "typescript",
+    "games",
+    "game",
+    "engine",
+    "entity",
+    "component",
+    "system",
+    "ecs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wild-magic/moon-buggy.git"
+  },
   "scripts": {
     "build": "next build",
     "now-build": "next build",

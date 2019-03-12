@@ -28,6 +28,7 @@ export default (entity: EntityState): THREE.Object3D => {
       div.innerHTML = text;
       div.style.top = '-1000';
       div.style.left = '-1000';
+      div.style.pointerEvents = 'none';
       this.element = div;
     }
 

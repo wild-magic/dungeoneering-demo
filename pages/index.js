@@ -1,12 +1,15 @@
 import Header from '../components/header';
+import { version } from '../package.json';
 
 function Index() {
   return (
     <main>
-      <h1>Wild Magic</h1>
       <footer>
-        <div>kenny.wtf 2019</div>
-        <div>Github</div>
+        <div>wildmagic at kenny.wtf 2019</div>
+        <div>{version}</div>
+        <div>
+          <a href="https://github.com/wild-magic/Wild-Magic.git"> github</a>
+        </div>
       </footer>
     </main>
   );

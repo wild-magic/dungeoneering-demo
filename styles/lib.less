@@ -19,28 +19,42 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  // background-image: linear-gradient(#00bcd440, #8bc34a);
-  // background-size: 100vw 100vh;
-  color: white;
-  background-color: pink;
-  background-image: linear-gradient(180deg, #720027 0%, #380036 74%);
+  color: #333333;
+  // background-color: #20bf55;
+  // background-image: linear-gradient(315deg, #20bf55 0%, #01baef 74%);
+  // background-color: #fc5296;
+  // background-image: linear-gradient(315deg, #fc5296 0%, #f67062 74%);
+  background-color: #fee2f8;
+  background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: lighter;
   background-size: 100vw 100vh;
 }
 
 main {
   z-index: 1;
   position: relative;
+  padding: 1em;
+}
+
+footer {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  justify-content: space-between;
+  left: 0;
+  padding: 1em;
+  width: calc(100vw - 2em);
 }
 
 a {
-  color: white;
+  color: #333;
   text-decoration: none;
 }
 
 .text-label {
-  color: #fff;
-  font-family: 'Fira Mono', Monaco, 'Andale Mono', 'Lucida Console',
-    'Bitstream Vera Sans Mono', 'Courier New', Courier, monospace;
   margin: -5px 0 0 15px;
   pointer-events: none;
 }

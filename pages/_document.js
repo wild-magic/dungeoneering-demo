@@ -9,11 +9,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Head>
-          <title>Wild Magic | Dungeoneering</title>
-          <meta name="theme-color" content="#ffc0cb" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />
