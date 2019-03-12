@@ -7,9 +7,11 @@ import {
   renderableComponent,
   positionComponent,
   textComponent,
+  tileComponent,
 } from '../../components';
 import Dungeon from 'dungeon-generator';
 import { RenderTypes } from '../render/types/renderType';
+import { makeTile } from '../../entities';
 
 const dungeonSystem = () =>
   new System<{ dungeon: Dungeon }>({
@@ -20,16 +22,16 @@ const dungeonSystem = () =>
 
       // @ts-ignore
       const dungeon = new Dungeon({
-        size: [50, 50],
+        size: [100, 100],
         rooms: {
           initial: {
-            min_size: [3, 3],
-            max_size: [3, 3],
+            min_size: [6, 6],
+            max_size: [12, 12],
             max_exits: 1,
           },
           any: {
-            min_size: [2, 2],
-            max_size: [5, 5],
+            min_size: [4, 4],
+            max_size: [10, 10],
             max_exits: 4,
           },
         },
@@ -45,27 +47,25 @@ const dungeonSystem = () =>
       dungeon.print();
 
       dungeon.children.forEach(room => {
-        // Add Exits
-        room.exits.forEach((exit, index) => {
-          console.log(exit);
-          const [[x, y], angle, connectingRoom] = exit; // local position of exit and piece it exits to
-          const [gx, gy] = room.global_pos([x, y]); // [x, y] global pos of the exit
-
-          entityActions.addEntity(
-            new Entity({
-              name: `room-${room.id}-exit-${index}`,
-              components: [
-                renderableComponent({
-                  mesh: RenderTypes.CUBE,
-                  position: positionComponent({
-                    x: gx,
-                    y: 0,
-                    z: gy,
-                  }),
-                }),
-              ],
-            })
-          );
+        // Add tiles!
+        room.walls.rows.forEach((row, rowIndex: number) => {
+          let [startX, startZ] = room.position;
+          // roooms are always 1 down and to the right
+          startX = startX - 1;
+          startZ = startZ - 1;
+          row.forEach((isWall: boolean, columnIndex: number) => {
+            entityActions.addEntity(
+              makeTile(
+                `room-${room.id}-${rowIndex}-${columnIndex}`,
+                isWall ? 'wall' : 'floor',
+                {
+                  x: startX + columnIndex,
+                  y: 0,
+                  z: startZ + rowIndex,
+                }
+              )
+            );
+          });
         });
 
         // Add Rooms!

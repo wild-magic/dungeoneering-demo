@@ -4,10 +4,13 @@ import {
   renderDebugComponent,
   POSITION,
   phyisicsComponent,
+  tileComponent,
+  positionComponent,
 } from '../components';
 import { EntitiesState } from 'wild-magic/lib/Engine/types';
 import { getRandomFloat } from '../../lib/utils';
 import { RenderTypes } from '../systems/render/types/renderType';
+import { Vector2 } from 'three';
 
 export const makeMoon = () =>
   new Entity({
@@ -15,6 +18,24 @@ export const makeMoon = () =>
     components: [
       renderableComponent({
         mesh: RenderTypes.MOON,
+      }),
+    ],
+  });
+
+export const makeTile = (
+  name,
+  type = 'floor',
+  position: { x: number; y: number; z: number }
+) =>
+  new Entity({
+    name: name || 'tile',
+    components: [
+      renderableComponent({
+        mesh: RenderTypes.TILE,
+        position: positionComponent(position),
+      }),
+      tileComponent({
+        type,
       }),
     ],
   });

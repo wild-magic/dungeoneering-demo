@@ -18,8 +18,8 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
     onEntityAdded: (entity: any, { world }: any) => {
       entity.components
         .filter((component: any) => component.name === RENDERABLE)
-        .forEach((renderMeshData, index) => {
-          const object = renderType(renderMeshData.data.mesh, entity);
+        .forEach(async (renderMeshData, index) => {
+          const object = await renderType(renderMeshData.data.mesh, entity);
           const { x, y, z } = renderMeshData.data.position.data;
           object.position.set(x, y, z);
           object.name = `${entity.uuid}-${index}`;
@@ -39,8 +39,8 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
               `${entity.uuid}-${index}`
             );
             if (!worldObj) {
-              console.warn('world object not found', entity);
-              // Something went wrong here, probably.
+              // The object hasn't been created,
+              // likely because it's still in an async init process
               return;
             }
             worldObj.rotation.set(rx, ry, rz);

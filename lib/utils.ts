@@ -32,3 +32,11 @@ export function getRandomInt(min, max) {
 export function getRandomBool() {
   return Math.random() >= 0.5;
 }
+
+export function radToDeg(radians: number) {
+  return radians * (180 / Math.PI);
+}
+
+export function degToRad(degrees: number) {
+  return degrees * (Math.PI / 180);
+}

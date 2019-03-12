@@ -16,23 +16,28 @@ export enum RenderTypes {
   TEXT = 'TEXT',
 }
 
-export default (
+export default async (
   renderType: RenderTypes,
   entity: EntityState
-): THREE.Object3D => {
-  switch (renderType) {
-    case RenderTypes.MOON:
-      return moon(entity);
-    case RenderTypes.TEXT:
-      return text(entity);
-    case RenderTypes.DEBUG:
-      return debug(entity);
-    case RenderTypes.ROOM:
-      return room(entity);
-    case RenderTypes.TILE:
-      return tile(entity);
-    case RenderTypes.CUBE:
-    default:
-      return cube(entity);
+): Promise<THREE.Object3D> => {
+  try {
+    switch (renderType) {
+      case RenderTypes.MOON:
+        return moon(entity);
+      case RenderTypes.TEXT:
+        return text(entity);
+      case RenderTypes.DEBUG:
+        return debug(entity);
+      case RenderTypes.ROOM:
+        return room(entity);
+      case RenderTypes.TILE:
+        return tile(entity);
+      case RenderTypes.CUBE:
+      default:
+        return cube(entity);
+    }
+  } catch (error) {
+    console.error(error);
+    return cube(entity);
   }
 };
