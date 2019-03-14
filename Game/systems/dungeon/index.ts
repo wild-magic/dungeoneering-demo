@@ -43,7 +43,7 @@ const dungeonSystem = () =>
         symmetric_rooms: false,
         interconnects: 1,
         max_interconnect_length: 10,
-        room_count: 5,
+        room_count: getRandomInt(5, 20),
       });
       dungeon.generate();
       dungeon.print();
