@@ -7,10 +7,12 @@ const material = new THREE.MeshBasicMaterial({ color: 0xffc107 });
 
 export default (entity: EntityState): THREE.Object3D => {
   const object = new THREE.Mesh(geometry, material);
+  object.position.set(0, 0.5, 0);
   const objectContainer = new THREE.Object3D();
   const light = new THREE.PointLight(0xffc107, 0.8, 10);
-  object.scale.set(0.2, 0.5, 0.2);
-  light.position.set(0, 1, 0);
+  object.scale.set(0.2, 0.2, 0.2);
+  light.position.set(0, 0.5, 0);
+  light.castShadow = true;
   objectContainer.add(object);
   objectContainer.add(light);
   return objectContainer;

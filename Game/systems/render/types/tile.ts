@@ -20,8 +20,7 @@ export default async (entity: EntityState): Promise<THREE.Object3D> => {
 
   const texture = await loadTextureAsync(tileset[type]);
   texture.magFilter = THREE.NearestFilter;
-  const geometry = new THREE.PlaneBufferGeometry(1, 1);
-  geometry.translate(1 / 2, 1 / 2, 0);
+
   const material = new THREE.MeshPhysicalMaterial({
     // color: 0xffff00,
     roughness: 0.8,
@@ -29,10 +28,22 @@ export default async (entity: EntityState): Promise<THREE.Object3D> => {
     map: texture,
     side: THREE.DoubleSide,
   });
-  const plane = new THREE.Mesh(geometry, material);
-  plane.rotation.set(degToRad(90), 0, 0);
+  let mesh;
+  if (type === 'wall') {
+    const geometry = new THREE.BoxBufferGeometry(1, 1);
+    geometry.translate(1 / 2, 1 / 2, 1 / 2);
+    mesh = new THREE.Mesh(geometry, material);
+  } else {
+    const geometry = new THREE.PlaneBufferGeometry(1, 1);
+    geometry.translate(1 / 2, 1 / 2, 0);
+    mesh = new THREE.Mesh(geometry, material);
+    mesh.rotation.set(degToRad(90), 0, 0);
+  }
+
+  mesh.receiveShadow = true;
+
   const objectContainer = new THREE.Object3D();
 
-  objectContainer.add(plane);
+  objectContainer.add(mesh);
   return objectContainer;
 };

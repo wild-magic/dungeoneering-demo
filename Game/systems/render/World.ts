@@ -36,6 +36,10 @@ export default class World {
     // gridHelper.position.set(0, 0, 0);
     // this.scene.add(gridHelper);
 
+    const light = new THREE.PointLight(0xffffff, 0.5, 200);
+    light.position.set(0, 20, 0);
+    this.scene.add(light);
+
     window.addEventListener(
       'resize',
       () => {

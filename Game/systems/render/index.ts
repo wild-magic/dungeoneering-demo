@@ -1,14 +1,13 @@
 import { System, Component } from 'wild-magic';
 import World from './World';
 import { RENDER_DEBUG, RENDERABLE } from '../../components';
-import * as THREE from 'three';
 import renderType, { RenderTypes } from './types/renderType';
 
 const renderSystem = (canvas: HTMLCanvasElement) =>
   new System<{ world: World }>({
     name: 'renderSystem',
     componentTypes: [RENDERABLE, RENDER_DEBUG],
-    onInit: () => {
+    onInit: entities => {
       console.log('hello world');
       return {
         world: new World(canvas),
@@ -19,14 +18,16 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
       entity.components
         .filter((component: any) => component.name === RENDERABLE)
         .forEach(async (renderMeshData, index) => {
-          const object = await renderType(renderMeshData.data.mesh, entity);
-          const { x, y, z } = renderMeshData.data.position.data;
-          object.position.set(x, y, z);
-          object.name = `${entity.uuid}-${index}`;
-
-          world.scene.add(object);
+          const worldObj = await renderType(renderMeshData.data.mesh, entity);
+          const { x: rx, y: ry, z: rz } = renderMeshData.data.rotation.data;
+          const { x: px, y: py, z: pz } = renderMeshData.data.position.data;
+          worldObj.rotation.set(rx, ry, rz);
+          worldObj.position.set(px, py, pz);
+          worldObj.name = `${entity.uuid}-${index}`;
+          world.scene.add(worldObj);
         });
     },
+
     onUpdate: (delta: number, entities, entityActions, { world }: any) => {
       // @ts-ignore
       entities.forEach((entity: any) => {
@@ -52,8 +53,6 @@ const renderSystem = (canvas: HTMLCanvasElement) =>
             }
           });
       });
-
-      // make sure we update lal the
 
       world.update();
     },

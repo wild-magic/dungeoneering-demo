@@ -4,6 +4,7 @@ import {
   addEntityAction,
   updateEntityAction,
   deleteEntityAction,
+  flagUpdatedEntityAction,
   EntityState,
 } from 'wild-magix';
 import { EntityActions, EntitiesState } from 'wild-magic/lib/Engine/types';
@@ -25,10 +26,17 @@ interface GameProps {
   addEntity: EntityActions['addEntity'];
   updateEntity: EntityActions['updateEntity'];
   removeEntity: EntityActions['removeEntity'];
+  flagUpdatedEntity: EntityActions['flagUpdatedEntity'];
 }
 
 const GameCanvasComponent: React.FunctionComponent<GameProps> = props => {
-  const { entities, addEntity, updateEntity, removeEntity } = props;
+  const {
+    entities,
+    addEntity,
+    updateEntity,
+    removeEntity,
+    flagUpdatedEntity,
+  } = props;
   const canvasEl = React.useRef<HTMLCanvasElement>(null);
   const [game, setGame] = React.useState<Game | null>(null);
 
@@ -47,6 +55,7 @@ const GameCanvasComponent: React.FunctionComponent<GameProps> = props => {
           addEntity,
           updateEntity,
           removeEntity,
+          flagUpdatedEntity,
           getEntities: () => entities,
         });
         setGame(newGame);
@@ -80,6 +89,8 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => ({
     componentData: any
   ) => dispatch(updateEntityAction(entityUUID, componentName, componentData)),
   removeEntity: (entity: EntityState) => dispatch(deleteEntityAction(entity)),
+  flagUpdatedEntity: (entityUUID: string) =>
+    dispatch(flagUpdatedEntityAction(entityUUID)),
 });
 
 export default connect(
