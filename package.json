@@ -26,6 +26,7 @@
   "dependencies": {
     "@zeit/next-less": "^0.3.1-canary.4",
     "@zeit/next-typescript": "^1.1.1",
+    "@zeit/next-workers": "^1.0.0",
     "cannon": "^0.6.2",
     "dungeon-generator": "0.0.1",
     "express": "^4.16.4",
@@ -37,11 +38,12 @@
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
+    "redux-worker-middleware": "^1.0.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
     "three": "^0.102.1",
     "three-orbitcontrols": "^2.102.1",
-    "wild-magic": "^1.0.0-alpha.9",
+    "wild-magic": "^1.0.0-alpha.10",
     "wild-magix": "^1.0.0-alpha.4"
   },
   "devDependencies": {

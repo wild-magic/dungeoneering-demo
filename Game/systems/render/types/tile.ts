@@ -6,6 +6,15 @@ import { degToRad } from '../../../../lib/utils';
 import { TILE } from '../../../components';
 import loadTextureAsync from '../../../../lib/load-texture';
 
+const wallGeometry = new THREE.BoxBufferGeometry(1, 1);
+wallGeometry.translate(1 / 2, 1 / 2, 1 / 2);
+const floorGeometry = new THREE.PlaneBufferGeometry(1, 1);
+floorGeometry.translate(1 / 2, 1 / 2, 0);
+
+let material = {
+  wall: null,
+  floor: null,
+};
 export default async (entity: EntityState): Promise<THREE.Object3D> => {
   const tileset = {
     wall,
@@ -18,25 +27,23 @@ export default async (entity: EntityState): Promise<THREE.Object3D> => {
 
   const type = (tileData && tileData.data && tileData.data.type) || 'floor';
 
-  const texture = await loadTextureAsync(tileset[type]);
-  texture.magFilter = THREE.NearestFilter;
+  if (!material[type]) {
+    const texture = await loadTextureAsync(tileset[type]);
+    texture.magFilter = THREE.NearestFilter;
+    material[type] = new THREE.MeshPhongMaterial({
+      // color: 0xffff00,
+      // roughness: 0.8,
+      reflectivity: 0.1,
+      map: texture,
+      side: THREE.DoubleSide,
+    });
+  }
 
-  const material = new THREE.MeshPhysicalMaterial({
-    // color: 0xffff00,
-    roughness: 0.8,
-    reflectivity: 0.1,
-    map: texture,
-    side: THREE.DoubleSide,
-  });
   let mesh;
   if (type === 'wall') {
-    const geometry = new THREE.BoxBufferGeometry(1, 1);
-    geometry.translate(1 / 2, 1 / 2, 1 / 2);
-    mesh = new THREE.Mesh(geometry, material);
+    mesh = new THREE.Mesh(wallGeometry, material[type]);
   } else {
-    const geometry = new THREE.PlaneBufferGeometry(1, 1);
-    geometry.translate(1 / 2, 1 / 2, 0);
-    mesh = new THREE.Mesh(geometry, material);
+    mesh = new THREE.Mesh(floorGeometry, material[type]);
     mesh.rotation.set(degToRad(90), 0, 0);
   }
 
